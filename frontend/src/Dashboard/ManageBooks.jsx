@@ -61,7 +61,7 @@ const ManageBooks = () => {
                 </Table.Head>
 
                 {
-                    allBooks.map((book, index) => <Table.Body className="divide-y" key={book._id}>
+                    allBooks.map((book, index) => <Table.Body className="divide-y" key={book.id}>
                         <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
                             <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
                                 {index + 1}
@@ -81,11 +81,11 @@ const ManageBooks = () => {
                             <Table.Cell>
                                 <Link
                                     className="font-medium text-cyan-600 hover:underline dark:text-cyan-500 mr-5"
-                                    to={`/admin/dashboard/edit-books/${book._id}`}
+                                    to={`/admin/dashboard/edit-books/${book.id}`}
                                 >
                                     Edit
                                 </Link>
-                                <button className='bg-red-600 px-4 py-1 font-semibold text-white rounded-sm hover:bg-sky-600' onClick={() => handleDelete(book._id)}>Delete</button>
+                                <button className='bg-red-600 px-4 py-1 font-semibold text-white rounded-sm hover:bg-sky-600' onClick={() => handleDelete(book.id)}>Delete</button>
 
                             </Table.Cell>
                         </Table.Row>

@@ -1,7 +1,6 @@
 const mysql = require('mysql2');
 const express = require('express');
 const cors = require('cors');
-
 const app = express();
 const port = process.env.PORT || 5000;
 
@@ -13,7 +12,8 @@ const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',      // Thay bằng username của bạn
     password: '@Nguyen1222004',      // Thay bằng password của bạn
-    database: 'BookInventory'
+    database: 'BookInventory',
+    port: 3306
 });
 
 db.connect(err => {
@@ -24,10 +24,10 @@ db.connect(err => {
     console.log('Kết nối MySQL thành công!');
 });
 
-// API Test
-app.get('/', (req, res) => {
-    res.send('Hello World!');
-});
+// // API Test
+// app.get('/', (req, res) => {
+//     res.send('Hello World!');
+// });
 app.post('/upload-book', (req, res) => {
     const { bookTitle, authorName, imageURL, category, bookDescription, bookPDFURL } = req.body;
     const sql = `INSERT INTO Books (bookTitle, authorName, imageURL, category, bookDescription, bookPDFURL) VALUES (?, ?, ?, ?, ?, ?)`;
@@ -99,6 +99,17 @@ app.delete('/favorite-book/:id', (req, res) => {
         res.json({ message: 'Sách yêu thích đã bị xóa!' });
     });
 });
+
+const path = require('path');
+
+// Serve static React files
+app.use(express.static(path.join(__dirname, 'dist')));
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+});
+
+// ==================================== //
 app.listen(port, () => {
     console.log(`Server đang chạy tại http://localhost:${port}`);
 });
