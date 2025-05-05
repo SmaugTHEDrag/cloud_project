@@ -4,14 +4,33 @@ const cors = require('cors');
 const app = express();
 const port = process.env.PORT || 5000;
 
-app.use(cors());
-app.use(express.json());
+app.use(cors({
+    origin: '*', // Allows all origins, or you can specify a specific URL like 'http://group-alb-1865585642.us-east-1.elb.amazonaws.com'
+    methods: ['GET', 'POST', 'PATCH', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+}));
+
+// const corsOptions = {
+//     origin: '*', // You can also specify 'http://group-alb-1865585642.us-east-1.elb.amazonaws.com' for more security
+//     methods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'], // Make sure OPTIONS is allowed
+//     allowedHeaders: ['Content-Type', 'Authorization'],
+//     preflightContinue: false, // Pass control to the next middleware
+//     optionsSuccessStatus: 204 // Some legacy browsers might not accept 200 for OPTIONS requests
+// };
+
+// app.use(cors(corsOptions));
+
+// // Enable CORS preflight for any other non-GET/POST/DELETE/PATCH methods
+// app.options('*', cors(corsOptions));
+
+
+  app.use(express.json());
 
 // Kết nối MySQL
 const db = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',      // Thay bằng username của bạn
-    password: '@Nguyen1222004',      // Thay bằng password của bạn
+    host: 'group3-rds-mysql.cuv3amhsli0d.us-east-1.rds.amazonaws.com',
+    user: 'group3',      // Thay bằng username của bạn
+    password: 'gowiththeflow',      // Thay bằng password của bạn
     database: 'BookInventory',
     port: 3306
 });
